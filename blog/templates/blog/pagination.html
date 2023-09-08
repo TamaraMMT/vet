@@ -1,0 +1,30 @@
+
+<div class="flex justify-center items-center">
+    {% if pagination_range.first_page_out_of_range %}
+    <div class="pagination-item">
+        <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-gray-800 dark:hover:bg-lime-500 dark:hover:text-gray-800" href="?page=1{{ additional_url_query }}">1</a>
+    </div>
+    <div class="pagination-item">
+        <span class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600">...</span>
+    </div>
+    {% endif %}
+
+    {% for page in pagination_range.pagination %}
+    <div class="pagination-item">
+        {% if pagination_range.current_page == page %}
+        <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-gray-800 dark:hover:bg-lime-500 dark:hover:text-gray-800" href="?page={{ page }}{{ additional_url_query }}">{{ page }}</a>
+        {% else %}
+        <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-gray-800 dark:hover:bg-lime-500 dark:hover:text-gray-800" href="?page={{ page }}{{ additional_url_query }}">{{ page }}</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    {% if pagination_range.last_page_out_of_range %}
+    <div class="pagination-item">
+        <span class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 ">...</span>
+    </div>
+    <div class="pagination-item">
+        <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-gray-800 dark:hover:bg-lime-500 dark:hover:text-gray-800" href="?page={{ pagination_range.total_pages }}{{ additional_url_query }}">{{ pagination_range.total_pages }}</a>
+    </div>
+    {% endif %}    
+</div>

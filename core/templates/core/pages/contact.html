@@ -1,0 +1,41 @@
+{% extends 'global/base.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+
+{% block content %}
+<div class="flex flex-col justify-between p-6 m-6 max-w-4xl mx-auto bg-white shadow-md rounded-lg md:flex-row md:items-start">
+  <div class="p-10 w-full md:w-1/2 p-3 max-w-xs">
+    <h1 class="text-2xl font-semibold text-green-600 mb-2">Lovepets</h1>
+    <p class="mb-3 text-gray-700">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi,  accusamus asperiores in alias animi velit tempore provident laudantium, ea voluptates nesciunt explicabo
+    </p>
+    <p class="mb-3 text-gray-700">
+        📞 + (000) 000 000<br>
+        📞 + (000) 000 000<br>
+        📞 + (000) 000 000
+    </p>
+    <p class="mb-3 text-gray-700">
+        📍 2685 Iris St, Ottawa ON K2C 3S4, Canada
+    </p>
+</div>
+<form class="p-10  w-full md:w-1/2 p-3 max-w-xs" method="post">
+    <h2 class="text-2xl font-semibold mb-4">Contact Us</h2>
+    {% csrf_token %}
+      <div class="mb-4">
+          <label for="name" class="block font-medium mb-2">Name</label>
+          <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" placeholder="Enter your name">
+      </div>
+      <div class="mb-4">
+          <label for="email" class="block font-medium mb-2">Email</label>
+          <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" placeholder="Enter your email">
+      </div>
+      <div class="mb-4">
+          <label for="message" class="block font-medium mb-2">Message</label>
+          <textarea id="message" name="message" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" rows="4" placeholder="Write your message"></textarea>
+      </div>
+      <button type="submit" class="w-full bg-green-700 text-white py-2 rounded-md hover:bg-green-900 transition duration-300">Send</button>
+  </form>
+
+</div>
+
+{% endblock content %}
