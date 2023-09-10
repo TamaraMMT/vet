@@ -28,7 +28,7 @@
                                     {% endif %}
                                 </a>
                             </div>
-                            <div class="p-5 min-w-[900px]">
+                            <div class="p-5">
                                 <a href="{% url 'blog:post' pk=post.pk %}" class="block   text-lg font-medium text-black hover:underline">{{ post.title }}</a>
                                 {% if post.author %}
                                     <h2 class=" text-indigo-500 font-semibold mt-2">

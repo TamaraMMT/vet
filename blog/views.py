@@ -11,7 +11,7 @@ class BlogListView(ListView):
     template_name = 'blog/blog.html'
     context_object_name = 'blog'
     model = PostBlog
-    paginate_by = 3
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -90,7 +90,7 @@ class CreatePostView(CreateView):
 class CategoryPostsListView(ListView):
     template_name = 'blog/category_posts.html'
     context_object_name = 'post_list_category'
-    paginate_by = 3
+    paginate_by = 5
 
     def get_queryset(self):
         category_id = self.kwargs['pk']
