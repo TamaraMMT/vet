@@ -1,4 +1,5 @@
 from ast import Delete
+from urllib import response
 from django.urls import reverse
 from .test_post_base import PostTestBase
 
@@ -29,3 +30,19 @@ class BlogPageViewTest(PostTestBase):
         response = self.client.get(reverse('blog:blog'))
         self.assertContains(response, self.post.title)
         self.assertContains(response, self.category.name)
+
+    def test_blog_is_paginated(self):
+     # make_post() there are already two recipes created. in total there are 22 posts created
+        for _ in range(20):
+            self.make_post()
+
+        response = self.client.get(reverse('blog:blog'))
+        posts = response.context['blog']
+        paginator = posts.paginator
+
+        self.assertEqual(paginator.num_pages, 5)
+        self.assertEqual(len(paginator.get_page(1)), 5)
+        self.assertEqual(len(paginator.get_page(2)), 5)
+        self.assertEqual(len(paginator.get_page(3)), 5)
+        self.assertEqual(len(paginator.get_page(4)), 5)
+        self.assertEqual(len(paginator.get_page(5)), 2)
