@@ -1,3 +1,4 @@
+from email import message
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView
@@ -70,6 +71,7 @@ class CreatePostView(CreateView):
             cover = default_cover_path
 
         if PostBlog.objects.filter(slug=slug).exists():
+            messages.success(request, 'This is your new post!')
             messages.error(
                 request, 'Slug already exists. Please choose another slug.')
             return redirect('blog:create_post')
@@ -82,8 +84,10 @@ class CreatePostView(CreateView):
             author_id=author_id,
             cover=cover,
         )
-        messages.success(request, 'Sua receita foi salva com sucesso!')
 
+        messages.success(request, 'This is your new post!')
+        messages.add_message(
+            request, messages.INFO, 'Slug already exists. Please choose another slug')
         return redirect('blog:post', pk=post.pk)
 
 
