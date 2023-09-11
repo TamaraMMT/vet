@@ -2,23 +2,25 @@
 {% load static %}
 <html lang="en">
 <head>
-    {% include 'core/partials/head.html' %}
+    {% include 'global/partials/head.html' %}
     <title>{% block title %} {% endblock title %} | Veterinary</title>
     
 </head>
 <body>
-    {% include 'core/partials/header.html' %}
-
-
+    {% include 'global/partials/header.html' %}
+    
+    {% include 'global/partials/messages.html' %}
 
 
     {% block content %}
     {% endblock content %}
 
-    {% include 'core/partials/whatsapp_button.html' %}
+    {% include 'global/partials/whatsapp_button.html' %}
 
-    {% include 'core/partials/footer.html' %}
-    <script src="{% static 'core/script.js' %}"></script>
+    {% include 'global/partials/footer.html' %}
+    <script src="{% static 'global/script.js' %}"></script>
+
+
 </body>
 </html>
 
