@@ -42,6 +42,7 @@ def make_pagination(request, queryset, per_page, qty_pages=4):
     except ValueError:
         current_page = 1
 
+    queryset = queryset.order_by('-id')
     paginator = Paginator(queryset, per_page)
     page_obj = paginator.get_page(current_page)
 

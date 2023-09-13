@@ -99,7 +99,7 @@ class CategoryPostsListView(ListView):
     def get_queryset(self):
         category_id = self.kwargs['pk']
         self.category = get_object_or_404(Category, pk=category_id)
-        return PostBlog.objects.filter(category=self.category)
+        return PostBlog.objects.filter(category=self.category).order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
