@@ -32,21 +32,6 @@ class ServicesPageViewTest(TestCase):
         self.assertEqual(context['title'], 'Services')
 
 
-class ContactPageViewTest(TestCase):
-    def test_contact_page_status_code(self):
-        response = self.client.get(reverse('veterinary:contact'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_contact_page_template_used(self):
-        response = self.client.get(reverse('veterinary:contact'))
-        self.assertTemplateUsed(response, 'core/pages/contact.html')
-
-    def test_contact_page_contains_title(self):
-        response = self.client.get(reverse('veterinary:contact'))
-        context = response.context
-        self.assertEqual(context['title'], 'Contact Us')
-
-
 class AboutUsPageViewTest(TestCase):
     def test_about_page_status_code(self):
         response = self.client.get(reverse('veterinary:about'))

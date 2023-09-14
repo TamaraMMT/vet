@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core',
     'blog',
     'authors',
+    'contact',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,9 @@ MEDIA_ROOT = BASE_DIR / 'media'  # configurar no deploid os caminhos
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
