@@ -9,8 +9,7 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your user is created')
-            return redirect('authors:register')
+            return redirect('authors:success')
         else:
             messages.info(request, 'Sorry! form not sent. check all fields ')
     else:
@@ -19,5 +18,5 @@ def register(request):
     return render(request, 'authors/pages/register_view.html', {'form': form})
 
 
-def login(request):
-    ...
+def success(request):
+    return render(request, 'authors/pages/success_register.html')

@@ -61,11 +61,10 @@ class RegisterIntegrationTest(DjangoTestCase):
 
     def test_get_view_and_template_form(self):
         response = self.client.get(reverse('authors:register'))
+        form = response.context['form']
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'authors/pages/register_view.html')
-
-        form = response.context['form']
         self.assertTrue(isinstance(form, RegistrationForm))
 
     def test_post_view_with_valid_form(self):
@@ -73,7 +72,7 @@ class RegisterIntegrationTest(DjangoTestCase):
             reverse('authors:register'), data=self.form_data)
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('authors:register'))
+        self.assertRedirects(response, reverse('authors:success'))
 
         # Check if the user was created
         user = User.objects.get(username='test_user')
@@ -90,7 +89,7 @@ class RegisterIntegrationTest(DjangoTestCase):
         ('password2', 'Please, repeat your password'),
         ('email', 'E-mail is required'),
     ])
-    # Check if the field not is
+    # Check if the field not is empty
     def test_fields_cannot_be_empty(self, field, msg):
         self.form_data[field] = ''
         url = reverse('authors:register')

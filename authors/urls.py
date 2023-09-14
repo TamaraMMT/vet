@@ -5,6 +5,6 @@ app_name = 'authors'
 
 urlpatterns = [
     path('register/', views.register, name='register'),
-    path('login/', views.login, name='login'),
+    path('success/', views.success, name='success'),
 
 ]
