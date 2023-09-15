@@ -10,43 +10,12 @@
         <h1 class="text-2xl font-semibold text-center">Register</h1>
     </div>
     <div class="text-gray-700">
-        <form method="post">
-            {% csrf_token %}
-            <div class=" p-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                {% for field in form.visible_fields %}
-                <div class="sm:col-span-3">
-                    <label for="{{ field.id_for_label }}" class="block text-m font-medium leading-6 text-gray-900">{{ field.label_tag }}</label>
-                    <div class="mt-2">
-                        <input 
-                        type="{{ field.field.widget.input_type }}" 
-                        name="{{ field.name }}" 
-                        id="{{ field.id_for_label }}" 
-                        placeholder="{{ field.field.widget.attrs.placeholder }}"  
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:ring-inset sm:text-sm sm:leading-6">
-                        {% if field.errors %}
-                        <div class="text-red-600">{{ field.errors }}</div> 
-                        {% endif %}
-                        {% if field.help_text %}
-                        <p class="text-gray-600">{{ field.help_text }}</p> 
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
-                Register
-            </button>
-        </form>
+
+       {% include "global/partials/form.html" %}
     
-        {% if form.non_field_errors %}
-            <div class="error-message">
-                {{ form.non_field_errors }}
-            </div>
-        {% endif %}
+       
     </div>
 </div>
-
-
 
 {% endblock content %}
 
