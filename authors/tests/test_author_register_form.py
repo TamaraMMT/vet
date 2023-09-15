@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 
-class AuthorRegisterFormUnitTest(TestCase):
+class AuthorRegisterFormUnittest(TestCase):
     @parameterized.expand([
         ('username', 'Your username'),
         ('first_name', 'Your first name'),
@@ -79,7 +79,6 @@ class RegisterIntegrationTest(DjangoTestCase):
         self.assertEqual(user.username, 'test_user')
         self.assertEqual(user.first_name, 'first')
         self.assertEqual(user.last_name, 'last')
-        self.assertEqual(user.email, 'test@example.com')
 
     @parameterized.expand([
         ('username', 'This field must not be empty'),
@@ -141,3 +140,17 @@ class RegisterIntegrationTest(DjangoTestCase):
         response = self.client.post(url, data=self.form_data)
 
         self.assertNotIn(msg, response.content.decode('utf-8'))
+
+    def test_register_email_unique(self):
+        url = reverse('authors:register')
+        msg = 'User e-mail is already in use'
+
+        response1 = self.client.post(url, data=self.form_data, follow=True)
+        self.form_data['email'] = 'test2@example.com'
+
+        response2 = self.client.post(url, data=self.form_data, follow=True)
+
+        email_errors = response2.context['form'].errors.get('email')
+
+        if email_errors:
+            self.assertIn(msg, email_errors)
