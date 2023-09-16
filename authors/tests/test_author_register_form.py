@@ -72,7 +72,7 @@ class RegisterIntegrationTest(DjangoTestCase):
             reverse('authors:register'), data=self.form_data)
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('authors:success'))
+        self.assertRedirects(response, reverse('authors:login'))
 
         # Check if the user was created
         user = User.objects.get(username='test_user')
@@ -137,20 +137,31 @@ class RegisterIntegrationTest(DjangoTestCase):
         self.form_data['password2'] = '@Str0ngP@ssword1'
 
         url = reverse('authors:register')
-        response = self.client.post(url, data=self.form_data)
+        response = self.client.post(url, data=self.form_data, follow=True)
 
         self.assertNotIn(msg, response.content.decode('utf-8'))
 
     def test_register_email_unique(self):
         url = reverse('authors:register')
-        msg = 'User e-mail is already in use'
-
         response1 = self.client.post(url, data=self.form_data, follow=True)
+
         self.form_data['email'] = 'test2@example.com'
 
-        response2 = self.client.post(url, data=self.form_data, follow=True)
+        response2 = self.client.post(url, data=self.form_data)
+        msg = 'User e-mail is already in use'
 
         email_errors = response2.context['form'].errors.get('email')
 
         if email_errors:
             self.assertIn(msg, email_errors)
+
+    def test_register_login(self):
+        url = reverse('authors:register')
+
+        self.form_data.update({
+            'username': 'testuser',
+            'password': '123TesT.Pas',
+            'password2': '123TesT.Pas',
+        })
+
+        self.client.post(url, data=self.form_data)
