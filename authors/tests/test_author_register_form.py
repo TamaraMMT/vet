@@ -164,7 +164,7 @@ class RegisterIntegrationTest(DjangoTestCase):
         response = self.client.get(reverse('authors:register'))
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('authors:login_success'))
+        self.assertRedirects(response, reverse('authors:dashboard'))
 
     def test_registration_page(self):
         self.client.logout()
