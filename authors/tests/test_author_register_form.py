@@ -15,7 +15,7 @@ class AuthorRegisterFormUnittest(TestCase):
         ('password', 'Your password'),
         ('password2', 'Repeat your password')
     ])
-    def test_placeholder_fields_is_correct(self, field, placeholder):
+    def test_register_placeholder_fields_is_correct(self, field, placeholder):
         form = RegistrationForm()
         placeholder_form = form[field].field.widget.attrs['placeholder']
         self.assertEqual(placeholder_form, placeholder)
@@ -28,7 +28,7 @@ class AuthorRegisterFormUnittest(TestCase):
             'one lowercase letter and one number. The length should be '
             'at least 8 characters.'),
     ])
-    def test_help_text_fields_is_correct(self, field, help_text):
+    def test_register_help_text_fields_is_correct(self, field, help_text):
         form = RegistrationForm()
         current = form[field].field.help_text
         self.assertEqual(current, help_text)
@@ -41,7 +41,7 @@ class AuthorRegisterFormUnittest(TestCase):
         ('password', 'Password must not be empty'),
         ('password2', 'Please, repeat your password'),
     ])
-    def test_required_fields_is_correct(self, field, error_messages):
+    def test_register_required_fields_is_correct(self, field, error_messages):
         form = RegistrationForm()
         current = form.fields[field].error_messages['required']
         self.assertEqual(current, error_messages)
@@ -59,7 +59,7 @@ class RegisterIntegrationTest(DjangoTestCase):
         }
         return super().setUp(*args, **kwargs)
 
-    def test_get_view_and_template_form(self):
+    def test_register_get_view_and_template_form(self):
         response = self.client.get(reverse('authors:register'))
         form = response.context['form']
 
@@ -67,7 +67,7 @@ class RegisterIntegrationTest(DjangoTestCase):
         self.assertTemplateUsed(response, 'authors/pages/register_view.html')
         self.assertTrue(isinstance(form, RegistrationForm))
 
-    def test_post_view_with_valid_form(self):
+    def test_register_post_view_with_valid_form(self):
         response = self.client.post(
             reverse('authors:register'), data=self.form_data)
 
@@ -89,14 +89,14 @@ class RegisterIntegrationTest(DjangoTestCase):
         ('email', 'E-mail is required'),
     ])
     # Check if the field not is empty
-    def test_fields_cannot_be_empty(self, field, msg):
+    def test_register_fields_cannot_be_empty(self, field, msg):
         self.form_data[field] = ''
         url = reverse('authors:register')
         response = self.client.post(url, data=self.form_data)
 
         self.assertIn(msg, response.context['form'].errors.get(field))
 
-    def test_username_field_min_length_4_error(self):
+    def test_register_username_field_min_length_4_error(self):
         self.form_data['username'] = 'Lu'
         url = reverse('authors:register')
         response = self.client.post(url, data=self.form_data)
@@ -104,7 +104,7 @@ class RegisterIntegrationTest(DjangoTestCase):
 
         self.assertIn(msg, response.context['form'].errors.get('username'))
 
-    def test_username_field_max_length_30_error(self):
+    def test_register_username_field_max_length_30_error(self):
         self.form_data['username'] = 'vet' * 31
         url = reverse('authors:register')
         response = self.client.post(url, data=self.form_data)
@@ -121,7 +121,7 @@ class RegisterIntegrationTest(DjangoTestCase):
 
         self.assertIn(msg, response.context['form'].errors.get('password'))
 
-    def test_password_and_password_confirmation_are_equal(self):
+    def test_register_password_and_password_confirmation_are_equal(self):
         self.form_data['password'] = '@Str0ngP@ssword1'
         self.form_data['password2'] = '@Str0ngP@ssword1dif'
 
@@ -155,13 +155,40 @@ class RegisterIntegrationTest(DjangoTestCase):
         if email_errors:
             self.assertIn(msg, email_errors)
 
-    def test_register_login(self):
-        url = reverse('authors:register')
+    def test_register_view_if_user_is_authenticated_redirect(self):
+        user = User.objects.create_user(
+            username='test_user', password='password')
 
-        self.form_data.update({
-            'username': 'testuser',
-            'password': '123TesT.Pas',
-            'password2': '123TesT.Pas',
-        })
+        self.client.login(username='test_user', password='password')
 
-        self.client.post(url, data=self.form_data)
+        response = self.client.get(reverse('authors:register'))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('authors:login_success'))
+
+    def test_registration_page(self):
+        self.client.logout()
+        response = self.client.get(reverse('authors:register'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'authors/pages/register_view.html')
+
+    def test_clean_email_already_exists(self):
+        existing_email = 'test@example.com'
+        User.objects.create_user(
+            username='existing_user', email=existing_email, password='password')
+
+        form_data = {
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'username': 'johndoe',
+            'email': existing_email,
+            'password': 'StrongPass123',
+            'password2': 'StrongPass123',
+        }
+        form = RegistrationForm(data=form_data)
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('email', form.errors)
+        self.assertEqual(form.errors['email'][0],
+                         'User e-mail is already in use')

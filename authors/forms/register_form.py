@@ -71,7 +71,7 @@ class RegistrationForm(forms.ModelForm):
 
         if exists:
             raise ValidationError(
-                'User e-mail is alredy in use', code='invalid',
+                'User e-mail is already in use', code='invalid',
             )
 
     def clean(self):
