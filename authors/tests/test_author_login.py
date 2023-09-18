@@ -20,12 +20,12 @@ class LoginAuthorTest(TestCase):
         self.assertTemplateUsed(response, 'authors/pages/login.html')
         self.assertTrue(isinstance(form, LoginForm))
 
-    def test_login_post_success(self):
+    def test_login_post_success_redirecr_dashboard(self):
         self.client.login(username='test_user', password='password123')
         response = self.client.get(reverse('authors:login'))
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('authors:login_success'))
+        self.assertRedirects(response, reverse('authors:dashboard'))
 
     def test_login_successful_authentication(self):
         url = reverse('authors:login')
@@ -36,7 +36,7 @@ class LoginAuthorTest(TestCase):
 
         response = self.client.post(url, data=data, follow=True)
 
-        self.assertRedirects(response, reverse('authors:login_success'))
+        self.assertRedirects(response, reverse('authors:dashboard'))
         self.assertContains(response, 'You are logged in')
 
     def test_login_invalid_credentials(self):
@@ -65,10 +65,10 @@ class LoginAuthorTest(TestCase):
 
         self.assertContains(response, msg)
 
-    def test_login_view_if_user_is_authenticated_redirect(self):
+    def test_login_view_if_user_is_authenticated_redirect_dashboard(self):
         self.client.login(username='test_user', password='password123')
 
         response = self.client.get(reverse('authors:login'))
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('authors:login_success'))
+        self.assertRedirects(response, reverse('authors:dashboard'))

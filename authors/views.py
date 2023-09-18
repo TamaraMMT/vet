@@ -9,7 +9,7 @@ from .forms import RegistrationForm, LoginForm
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('authors:login_success')
+        return redirect('authors:dashboard')
     else:
         if request.method == 'POST':
             form = RegistrationForm(request.POST)
@@ -41,7 +41,7 @@ def register(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('authors:login_success')
+        return redirect('authors:dashboard')
     else:
         form = LoginForm()
         if request.method == 'POST':
@@ -56,7 +56,7 @@ def login_view(request):
                 if user_authenticate is not None:
                     login(request, user_authenticate)
                     messages.success(request, 'You are logged in')
-                    return redirect('authors:login_success')
+                    return redirect('authors:dashboard')
                 else:
                     messages.error(request, 'Invalid credentials')
             else:
@@ -73,11 +73,12 @@ def login_view(request):
 @login_required(login_url='authors:login', redirect_field_name='next')
 def logout_view(request):
     logout(request)
-    messages.success(request, 'You are logged out')
+    messages.info(request, 'You are logged out.')
     return redirect('authors:login')
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
-def login_success(request):
-    return render(request, 'authors/pages/login_success.html', {
-        'title': 'Login Successful'})
+def dashboard(request):
+    return render(request, 'authors/pages/dashboard.html', {
+        'title': 'Dashboard',
+    })

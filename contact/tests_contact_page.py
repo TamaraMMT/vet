@@ -75,21 +75,15 @@ class ContactTestSendMessage(DjangoTestCase):
             'message': 'Hello, this is a test message.'
         }
 
-    def test_contact_page_status_code_post(self):
-        response = self.client.post(
-            reverse('contact:contact'), data=self.contact_form)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('contact:success_contact'))
-        self.assertTrue(self.contact_form.is_valid())
-
     def test_contact_page_status_code_redirect(self):
+        form = ContactForm(data=self.contact_form)
         response = self.client.post(
-            reverse('contact:contact'), data=self.contact_form, follow=True)
+            self.url, data=self.contact_form, follow=True)
 
         self.assertEqual(response.status_code, 200)
         self.assertRedirects(response, reverse('contact:success_contact'))
 
-    def test_contact_page_status_code_post(self):
+    def test_contact_form_status_code_post(self):
         form = ContactForm(data=self.contact_form)
         response = self.client.post(self.url, data=self.contact_form)
 
