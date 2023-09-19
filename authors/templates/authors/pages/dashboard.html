@@ -9,15 +9,33 @@
     <div class="p-2">
         <h1 class="text-2xl font-semibold text-center">Dashboard</h1>
     </div>
-    <div class="text-gray-700 p-5">
-      <h2>Welcome back {{user.first_name|capfirst}}!</h2>
+    <div class="m-5">
+      <h2> {{user.first_name|capfirst}} Your recipes</h2>
+      <div class="p-1">
+        <h3 class="text-xl font-semibold text-center">titles </h3>
+        <ul>
+        {% for post in posts %}
+         <li class="p-2 hover:bg-gray-200">
+            <a href="{% url 'blog:post' pk=post.pk %}" class="text-md block ">{{post.title}}</a>
+            <h5 class="text-right text-sm">
+              {{post.created_ad}}
+            </h5>
+          </li>
+        {% empty %}
+          <li>
+            <p>Your do not have recipes  &#128532;</p>
+          </li>
+        {% endfor %}
+        </ul>  
+      </div>
 
-    <div class="block p-5">
-      <a href="{% url "authors:logout_view" %}" class="text-xl font-semibold text-center"> Logout </a>
-    </div>
+      {% if posts.has_other_pages %}
+      {% include 'global/partials/pagination.html' %}
+      {% endif %}
       
     </div>
-</div>
+
+  </div>
 
 
 
