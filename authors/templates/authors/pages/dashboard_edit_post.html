@@ -1,0 +1,63 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %}{{title}}{% endblock title %}
+
+
+
+
+{% block content %}
+<div class="m-6 p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-lg space-x-4">
+    <div class="m-5">
+        <h1 class="text-2xl font-semibold text-center mb-4">Edit your Post</h1>
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-4">
+            <label for="title" class="block text-gray-700 font-bold mb-1">Title:</label>
+            <input type="text" name="title" id="title" placeholder="input new title" class="w-full border rounded px-3 py-2" value="{{ post.title }}">
+        </div>
+        <div class="mb-4">
+            <label for="slug" class="block text-gray-700 font-bold mb-1">Slug:</label>
+            {% if not request.method == 'POST' %}
+            {% endif %}
+            <input type="slug" name="slug" id="slug" placeholder="your-tittle-for-url" class="w-full border rounded px-3 py-2" value="{{ post.slug }}">
+        </div>
+        <div class="mb-4">
+            <label for="article" class="block text-gray-700 font-bold mb-1">Article:</label>
+            {% if not request.method == 'POST' %}
+            {% endif %}
+            <textarea name="article" id="article" rows="10" class="w-full border rounded px-3 py-2">{{ post.article }}</textarea>
+        </div>
+        <div class="mb-4">
+            <label for="category" class="block text-gray-700 font-bold mb-1">Category:</label>
+            {% if not request.method == 'POST' %}
+            {% endif %}
+            <select name="category" id="category" class="w-full border rounded px-3 py-2">
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == post.category_id %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <h3 class="block text-gray-700 font-bold mb-1">Image:</h3>
+            <img class="w-full h-56 object-cover" src="{{ post.cover.url }}" alt="Image Veterinary">
+            <label for="cover" class="block text-gray-700 font-bold mb-1">New Image:</label>
+            <input type="file" name="cover" id="cover" class="w-full">
+        </div>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            Update Post
+        </button>
+        
+        {% if field.errors %}
+        <div class="text-red-600">{{ field.errors }}</div> 
+        {% endif %}
+
+        {% if field.help_text %}
+        <p class="text-gray-600">{{ field.help_text }}</p> 
+        {% endif %}
+        </form>
+
+    </div>
+</div>
+{% endblock content %}
+

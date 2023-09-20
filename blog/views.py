@@ -36,7 +36,7 @@ class BlogListView(ListView):
 
 class PostDetailView(DetailView):
     model = PostBlog
-    template_name = 'blog/blog-post.html'
+    template_name = 'blog/blog_post.html'
     context_object_name = 'post'
 
     def get_context_data(self, **kwargs):
@@ -86,8 +86,6 @@ class CreatePostView(CreateView):
         )
 
         messages.success(request, 'This is your new post!')
-        messages.add_message(
-            request, messages.INFO, 'Slug already exists. Please choose another slug')
         return redirect('blog:post', pk=post.pk)
 
 

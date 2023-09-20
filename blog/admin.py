@@ -13,7 +13,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = 'id', 'title', 'description', 'author'
     list_filter = 'category', 'author', 'created_ad'
     list_per_page = 10
-    prepopulated = {
+    prepopulated_fields = {
         'slug': ('title',)
     }
 

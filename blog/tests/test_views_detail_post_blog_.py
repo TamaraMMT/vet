@@ -13,7 +13,7 @@ class PostBlogDetailViewTest(PostTestBase):
         response = self.client.get(
             reverse('blog:post', kwargs={'pk': self.post.pk})
         )
-        self.assertTemplateUsed(response, 'blog/blog-post.html')
+        self.assertTemplateUsed(response, 'blog/blog_post.html')
 
     def test_post_blog_detail_view_context_data(self):
         response = self.client.get(

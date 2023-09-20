@@ -1,10 +1,13 @@
+import re
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from blog.models import PostBlog
+from authors.forms.post_form import AuthorPostForm
+from blog.models import PostBlog, Category
 from utils.pagination import make_pagination
+from django.shortcuts import get_object_or_404
 
 from .forms import RegistrationForm, LoginForm
 
@@ -84,10 +87,37 @@ def dashboard(request):
     posts = PostBlog.objects.filter(
         author=request.user
     )
-    page_obj, pagination_range = make_pagination(request, posts, 5)
+    page_obj, pagination_range = make_pagination(request, posts, 6)
 
     return render(request, 'authors/pages/dashboard.html', {
         'title': 'Dashboard',
         'posts':  page_obj,
         'pagination_range': pagination_range,
+    })
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def edit_post(request, pk):
+    post = get_object_or_404(PostBlog, pk=pk)
+    categories = Category.objects.all()
+
+    if request.method == 'POST':
+        form = AuthorPostForm(request.POST, instance=post,
+                              files=request.FILES or None)
+        if form.is_valid():
+            cover = request.FILES.get('cover', None)
+            if cover:
+                post.cover = cover
+            post.save()
+            messages.success(request, 'Your post was edited!')
+            return redirect('blog:post', pk=post.pk)
+        messages.error(request, 'Check all!')
+    else:
+        form = AuthorPostForm(instance=post)
+
+    return render(request, 'authors/pages/dashboard_edit_post.html', {
+        'title': 'Edit Post',
+        'form': form,
+        'categories': categories,
+        'post': post
     })
