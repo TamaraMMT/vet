@@ -9,19 +9,32 @@
         <h1 class="text-2xl font-semibold text-center">Dashboard</h1>
     </div>
     <div class="m-5">
-          <h2>{{ user.first_name|capfirst }} </h2>
-            <h3 class="text-xl font-semibold text-center"> Your recipes</h3>
+          <h2>Log with: {{ user.first_name|capfirst }} </h2>
+            <h3 class="text-xl p-2 font-semibold text-center"> Your recipes</h3>
             <ul>
                 {% for post in posts %}
                 <li class="p-5 bg-primary-100 hover:bg-neutral-200 rounded-lg">
-                  <a href="{% url 'blog:post' post.pk %}" class="block w-full h-full">
-                      <h2 class="text-lg font-semibold">{{ post.title }}</h2>
-                      <p class="text-smmt-2">{{ post.created_ad }}</p>
-                  </a>
+                    <div>
+                        <a href="{% url 'blog:posts' post.pk %}" class="block w-full h-full">
+                            <h2 class="text-lg font-semibold">{{ post.title }}</h2>
+                       
+                            <div class="flex items-center justify-between p-1">
+                            <p class="text-sm mt-2">{{ post.update_ad }}</p>
+        
+                            <form action="{% url 'authors:delete_post' %}" method="POST" class="inline-form form_delete">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{ post.pk }}">
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white  rounded plaintext-buttom">
+                                    Delete&#128465;
+                                </button>
+                            </form>
+                            </div>
+                        </a>
+                    </div>
                 </li>
                 {% empty %}
                 <li>
-                    <p>Your do not have recipes &#128532;</p>
+                    <p class="text-center">Your do not have recipes &#128532;</p>
                 </li>
                 {% endfor %}
             </ul>

@@ -14,33 +14,36 @@
 
         <div class="mb-4">
             <label for="title" class="block text-gray-700 font-bold mb-1">Title:</label>
-            <input type="text" name="title" id="title" placeholder="input new title" class="w-full border rounded px-3 py-2" value="{{ post.title }}">
+            <input type="text" name="title" id="title" placeholder="input new title" class="w-full border rounded px-3 py-2" value="{{ posts.title }}">
+            {% if form.title.errors %}
+            <div class="text-red-600">{{ form.title.errors }}</div> 
+        {% endif %}
         </div>
         <div class="mb-4">
             <label for="slug" class="block text-gray-700 font-bold mb-1">Slug:</label>
-            {% if not request.method == 'POST' %}
-            {% endif %}
-            <input type="slug" name="slug" id="slug" placeholder="your-tittle-for-url" class="w-full border rounded px-3 py-2" value="{{ post.slug }}">
+            <input type="slug" name="slug" id="slug" placeholder="your-tittle-for-url" class="w-full border rounded px-3 py-2" value="{{ posts.slug }}">
         </div>
         <div class="mb-4">
             <label for="article" class="block text-gray-700 font-bold mb-1">Article:</label>
-            {% if not request.method == 'POST' %}
-            {% endif %}
-            <textarea name="article" id="article" rows="10" class="w-full border rounded px-3 py-2">{{ post.article }}</textarea>
+            <textarea name="article" id="article" rows="10" class="w-full border rounded px-3 py-2">{{ posts.article }}</textarea>
         </div>
         <div class="mb-4">
             <label for="category" class="block text-gray-700 font-bold mb-1">Category:</label>
-            {% if not request.method == 'POST' %}
-            {% endif %}
             <select name="category" id="category" class="w-full border rounded px-3 py-2">
                 {% for category in categories %}
-                <option value="{{ category.id }}" {% if category.id == post.category_id %}selected{% endif %}>{{ category.name }}</option>
+                <option value="{{ category.id }}" {% if category.id == posts.category_id %}selected{% endif %}>{{ category.name }}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="mb-4">
-            <h3 class="block text-gray-700 font-bold mb-1">Image:</h3>
-            <img class="w-full h-56 object-cover" src="{{ post.cover.url }}" alt="Image Veterinary">
+            <div class="mb-4">
+                <h3 class="block text-gray-700 font-bold mb-1">Image:</h3>
+                {% if posts.cover %}
+                    <img class="w-full h-56 object-cover" src="{{ posts.cover.url }}" alt="Image Veterinary">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+            </div>
             <label for="cover" class="block text-gray-700 font-bold mb-1">New Image:</label>
             <input type="file" name="cover" id="cover" class="w-full">
         </div>
@@ -48,11 +51,11 @@
             Update Post
         </button>
         
-        {% if field.errors %}
-        <div class="text-red-600">{{ field.errors }}</div> 
-        {% endif %}
+{% if form.article.errors %}
+    <div class="text-red-600">{{ form.article.errors }}</div>
+{% endif %}
 
-        {% if field.help_text %}
+        {% if post_form.field.help_text %}
         <p class="text-gray-600">{{ field.help_text }}</p> 
         {% endif %}
         </form>
