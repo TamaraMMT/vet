@@ -73,6 +73,7 @@ class RegistrationForm(forms.ModelForm):
             raise ValidationError(
                 'User e-mail is already in use', code='invalid',
             )
+        return email
 
     def clean(self):
         cleaned_data = super().clean()
@@ -91,3 +92,4 @@ class RegistrationForm(forms.ModelForm):
                     password_confirmation_error,
                 ],
             })
+        return

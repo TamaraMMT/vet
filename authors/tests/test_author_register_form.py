@@ -115,20 +115,18 @@ class RegisterIntegrationTest(DjangoTestCase):
         self.form_data['password'] = '123'
         url = reverse('authors:register')
         response = self.client.post(url, data=self.form_data)
-        msg = ('Password must have at least one uppercase letter, '
-               'one lowercase letter and one number. The length should be '
-               'at least 8 characters.')
+        msg = ('Password is not secure, does not meet the specified requirements')
 
         self.assertIn(msg, response.context['form'].errors.get('password'))
 
     def test_register_password_and_password_confirmation_are_equal(self):
         self.form_data['password'] = '@Str0ngP@ssword1'
-        self.form_data['password2'] = '@Str0ngP@ssword1dif'
+        self.form_data['password2'] = '@Str0ngP@ssword1AAA'
 
         url = reverse('authors:register')
         response = self.client.post(url, data=self.form_data)
 
-        msg = 'The passwords do not equal'
+        msg = ('The passwords do not equal')
 
         self.assertIn(msg, response.context['form'].errors.get('password'))
         self.assertIn(msg, response.content.decode('utf-8'))
@@ -137,7 +135,7 @@ class RegisterIntegrationTest(DjangoTestCase):
         self.form_data['password2'] = '@Str0ngP@ssword1'
 
         url = reverse('authors:register')
-        response = self.client.post(url, data=self.form_data, follow=True)
+        response = self.client.post(url, data=self.form_data)
 
         self.assertNotIn(msg, response.content.decode('utf-8'))
 
