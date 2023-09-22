@@ -29,7 +29,7 @@ class CategoryPostBlogViewTest(PostTestBase):
     def test_category_view_page_load_post(self):
         response = self.client.get(
             reverse('blog:category_posts', kwargs={'pk': 2}))
-        postcategory = response.context['post_list_category']
+        postcategory = response.context['posts_list_category']
         expected_post = self.post
         self.assertIn(expected_post, postcategory)
 

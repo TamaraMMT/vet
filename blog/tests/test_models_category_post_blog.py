@@ -7,17 +7,17 @@ class PostModelTest(PostTestBase):
         self.post = self.make_post()
         return super().setUp()
 
-    def test_post_title_raise_error_if_title_has_more_65_chars(self):
+    def test_posts_title_raise_error_if_title_has_more_65_chars(self):
         self.post.title = 'A' * 66
         with self.assertRaises(ValidationError):
             self.post.full_clean()
 
-    def test_post_article_raise_error_if_title_has_more_65_chars(self):
+    def test_posts_article_raise_error_if_title_has_more_65_chars(self):
         self.post.article = 'A' * 1501
         with self.assertRaises(ValidationError):
             self.post.full_clean()
 
-    def test_post_str_representation(self):
+    def test_posts_str_representation(self):
         self.assertEqual(str(self.post), 'My first post')
 
 
