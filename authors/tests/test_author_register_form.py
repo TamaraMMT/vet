@@ -21,8 +21,9 @@ class AuthorRegisterFormUnittest(TestCase):
         self.assertEqual(placeholder_form, placeholder)
 
     @parameterized.expand([
-        ('username', 'Username must have letters, numbers or one of those @.+-_. '
-            'The length should be between 4 and 30 characters.'),
+        ('username',
+         'Username must have letters, numbers or one of those @.+-_. '
+         'The length should be between 4 and 30 characters.'),
         ('email', 'yourname@example.com'),
         ('password', 'Password must have at least one uppercase letter, '
             'one lowercase letter and one number. The length should be '
@@ -115,7 +116,9 @@ class RegisterIntegrationTest(DjangoTestCase):
         self.form_data['password'] = '123'
         url = reverse('authors:register')
         response = self.client.post(url, data=self.form_data)
-        msg = ('Password is not secure, does not meet the specified requirements')
+        msg = (
+            'Password is not secure, does not meet the specified requirements'
+        )
 
         self.assertIn(msg, response.context['form'].errors.get('password'))
 
@@ -141,7 +144,7 @@ class RegisterIntegrationTest(DjangoTestCase):
 
     def test_register_email_unique(self):
         url = reverse('authors:register')
-        response1 = self.client.post(url, data=self.form_data, follow=True)
+        self.client.post(url, data=self.form_data, follow=True)
 
         self.form_data['email'] = 'test2@example.com'
 
