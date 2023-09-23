@@ -14,7 +14,7 @@
         <div class="mt-4 m-4 p-4">
             <h1 class="block m-1 text-2xl font-medium text-black">{{ posts.title }}</h1>
             {% if posts.author.first_name %}
-            <h2 class="mt-4 text-indigo-500 font-semibold uppercase">{{ posts.author.first_name }}{{ posts.author.last_name }}</h2>
+            <h2 class="mt-4 text-indigo-500 font-semibold uppercase">{{ posts.author.first_name }} {{ posts.author.last_name }}</h2>
             {% else %}
             <h2 class="mt-4 text-indigo-500 font-semibold uppercase">{{ posts.author.username }}</h2>
             {% endif %}
@@ -31,8 +31,8 @@
             </div>
             {% if user.is_authenticated %}
             <div class="flex justify-evenly p-1">
-                <a href="{% url 'authors:edit_posts' posts.pk %}" class=" rounded font-semibold hover:bg-gray-200 p-1 ">Edit post</a>
-                <form action="{% url 'authors:delete_post' %}" method="POST" class="inline-form form_delete">
+                <a href="{% url 'authors:edit_posts' posts.pk %}" class="bg-gray-500 hover:bg-gray-600 p-1 text-white  rounded plaintext-buttom">Edit post </a>
+                <form action="{% url 'authors:delete_post' posts.pk %}" method="POST" class="inline-form form_delete">
                     {% csrf_token %}
                     <input type="hidden" name="id" value="{{ post.pk }}">
                     <button type="submit" class="bg-red-500 hover:bg-red-600 p-1 text-white  rounded plaintext-buttom">

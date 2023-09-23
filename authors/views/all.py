@@ -4,13 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from authors.forms.post_form import AuthorPostForm
-from blog.models import PostBlog, Category
-from utils.pagination import make_pagination
-from django.shortcuts import get_object_or_404
-from django.http import Http404
-from .forms import RegistrationForm, LoginForm
 from blog.models import PostBlog
+from utils.pagination import make_pagination
+from django.http import Http404
+from authors.forms import RegistrationForm, LoginForm
 
 
 def register(request):
@@ -95,70 +92,3 @@ def dashboard(request):
         'posts':  page_obj,
         'pagination_range': pagination_range,
     })
-
-
-@login_required(login_url='authors:login', redirect_field_name='next')
-def create_post(request):
-    categories = Category.objects.all()
-    form = AuthorPostForm(request.POST or None)
-
-    if request.method == 'POST':
-        form.instance.author = request.user
-        if form.is_valid():
-            post_blog = form.save()
-            messages.success(request, 'This is your new post!')
-            return redirect('blog:posts', pk=post_blog.pk)
-        else:
-            messages.error(request, 'The form is invalid.')
-
-    return render(request, 'authors/pages/create_post.html', {
-        'title': 'Create Post',
-        'categories': categories,
-        'form': form,
-    })
-
-
-@login_required(login_url='authors:login', redirect_field_name='next')
-def edit_posts(request, pk):
-    posts = get_object_or_404(PostBlog, pk=pk)
-    categories = Category.objects.all()
-
-    if request.method == 'POST':
-        form = AuthorPostForm(request.POST, instance=posts,
-                              files=request.FILES or None)
-        form.instance.author = request.user
-        if form.is_valid():
-            cover = request.FILES.get('cover', None)
-            if cover:
-                posts.cover = cover
-            posts.save()
-            messages.success(request, 'Your post was edited!')
-            return redirect('blog:posts', pk=posts.pk)
-    else:
-        form = AuthorPostForm(instance=posts)
-
-    return render(request, 'authors/pages/dashboard_edit_post.html', {
-        'title': 'Edit Post',
-        'form': form,
-        'categories': categories,
-        'posts': posts,
-    })
-
-
-@login_required(login_url='authors:login', redirect_field_name='next')
-def delete_post(request):
-    if not request.POST:
-        raise Http404()
-
-    POST = request.POST
-    id = POST.get('id')
-
-    posts = PostBlog.objects.filter(
-        author=request.user,
-        pk=id,
-    ).first()
-    if not posts:
-        raise Http404()
-    posts.delete()
-    messages.success(request, 'Deleted')
-    return redirect(reverse('authors:dashboard'))

@@ -1,7 +1,6 @@
 from email import message
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import CreateView
 from utils.pagination import make_pagination
 from django.contrib import messages
 
