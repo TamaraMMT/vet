@@ -9,8 +9,11 @@
                 <input 
                     type="{{ field.field.widget.input_type }}" 
                     name="{{ field.name }}" 
-                    id="{{ field.id_for_label }}" 
-                    placeholder="{{ field.field.widget.attrs.placeholder }}"  
+                    id="{{ field.id_for_label }}"
+                    placeholder="{{ field.field.widget.attrs.placeholder }}"
+                    {% if field.value is not None %}
+                    value="{{ field.value }}"
+                    {% endif %}
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:ring-inset sm:text-sm sm:leading-6"
                 >
                 {% if field.errors %}
@@ -20,7 +23,6 @@
                 {% if field.help_text %}
                 <p class="text-gray-600">{{ field.help_text }}</p> 
                 {% endif %}
-                
             </div>
         </div>
         {% endfor %}
@@ -29,9 +31,3 @@
         Send
     </button>
 </form>
-
-{% if form.non_field_errors %}
-<div class="error-message">
-    {{ form.non_field_errors }}
-</div>
-{% endif %}
