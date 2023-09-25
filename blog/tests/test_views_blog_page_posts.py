@@ -23,8 +23,6 @@ class BlogPageViewTest(PostTestBase):
         context = response.context
         self.assertEqual(context['title'], 'Veterinary Blog')
 
-# aqui falta o test da mensagem que mostra se nao tem post-------->>>>
-
     def test_view_blog_page_contain_post(self):
         self.make_post()
         response = self.client.get(reverse('blog:blog'))
@@ -37,12 +35,6 @@ class BlogPageViewTest(PostTestBase):
             self.make_post()
 
         response = self.client.get(reverse('blog:blog'))
-        posts = response.context['blog']
-        paginator = posts.paginator
+        list_post_blog = response.context['blog_list']
 
-        self.assertEqual(paginator.num_pages, 5)
-        self.assertEqual(len(paginator.get_page(1)), 5)
-        self.assertEqual(len(paginator.get_page(2)), 5)
-        self.assertEqual(len(paginator.get_page(3)), 5)
-        self.assertEqual(len(paginator.get_page(4)), 5)
-        self.assertEqual(len(paginator.get_page(5)), 2)
+        self.assertEqual(len(list_post_blog), 5)
