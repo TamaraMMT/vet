@@ -32,7 +32,10 @@ class BasePostView(LoginRequiredMixin):
         return self.render_to_response(self.get_context_data(form=form))
 
     def get_success_url(self):
-        return reverse_lazy(self.success_url_name, kwargs={'pk': self.object.pk})
+        return reverse_lazy(
+            self.success_url_name,
+            kwargs={'pk': self.object.pk}
+        )
 
 
 class DashboardListView(BasePostView, ListView):
@@ -41,7 +44,7 @@ class DashboardListView(BasePostView, ListView):
     page_title = 'Dashboard'
 
     def get_queryset(self):
-        return PostBlog.objects.filter(author=self.request.user)
+        return PostBlog.objects.filter(author=self.request.user).order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
