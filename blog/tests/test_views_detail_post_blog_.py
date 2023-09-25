@@ -19,7 +19,7 @@ class PostBlogDetailViewTest(PostTestBase):
         response = self.client.get(
             reverse('blog:posts', kwargs={'pk': self.post.pk})
         )
-        self.assertTrue('posts' in response.context)
+        self.assertTrue('blog_post' in response.context)
 
     def test_post_blog_detail_view_title_in_context(self):
         response = self.client.get(
@@ -33,7 +33,7 @@ class PostBlogDetailViewTest(PostTestBase):
         )
         self.assertContains(response, self.post.title)
 
-        context = response.context['posts']
+        context = response.context['blog_post']
         self.assertEqual(context.pk, self.post.pk)
         self.assertEqual(context.title, self.post.title)
         self.assertEqual(context.slug, self.post.slug)

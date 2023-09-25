@@ -6,24 +6,24 @@
 {% block content %}
 <div class="flex justify-center m-5">
     <div class="max-w-5xl bg-white rounded-xl w-full shadow-md overflow-hidden">
-        {% if posts.cover %}
-            <img class="w-full h-56 object-cover" src="{{ posts.cover.url }}" alt="Image Veterinary">
+        {% if blog_post.cover %}
+            <img class="w-full h-56 object-cover" src="{{ blog_post.cover.url }}" alt="Image Veterinary">
         {% else %}
             <img class="w-full h-56 object-cover" src="{% static 'media\blog\default-image-post.jpg' %}" alt="Default Image">
         {% endif %}
         <div class="mt-4 m-4 p-4">
-            <h1 class="block m-1 text-2xl font-medium text-black">{{ posts.title }}</h1>
-            {% if posts.author.first_name %}
-            <h2 class="mt-4 text-indigo-500 font-semibold uppercase">{{ posts.author.first_name }} {{ posts.author.last_name }}</h2>
+            <h1 class="block m-1 text-2xl font-medium text-black">{{ blog_post.title }}</h1>
+            {% if blog_post.author.first_name %}
+            <h2 class="mt-4 text-indigo-500 font-semibold uppercase">{{ blog_post.author.first_name }} {{ blog_post.author.last_name }}</h2>
             {% else %}
-            <h2 class="mt-4 text-indigo-500 font-semibold uppercase">{{ posts.author.username }}</h2>
+            <h2 class="mt-4 text-indigo-500 font-semibold uppercase">{{ blog_post.author.username }}</h2>
             {% endif %}
-            <p class="t-4 mt-4 text-gray-600 leading-relaxed ">{{ posts.article|linebreaksbr  }}</p>
+            <p class="t-4 mt-4 text-gray-600 leading-relaxed ">{{ blog_post.article|linebreaksbr  }}</p>
             <div class="flex justify-between flex-col sm:flex-row">
-                <p class="t-4 mt-4 text-gray-600 leading-relaxed">{{ posts.update_ad }}</p>
-                {% if posts.category %}
-                    <a href="{% url 'blog:category_posts' pk=posts.category.pk %}">
-                        <div class="mt-4 text-gray-800 font-semibold hover:underline ">Category: {{ posts.category }}</div>
+                <p class="t-4 mt-4 text-gray-600 leading-relaxed">{{ blog_post.update_ad }}</p>
+                {% if blog_post.category %}
+                    <a href="{% url 'blog:category_posts' pk=blog_post.category.pk %}">
+                        <div class="mt-4 text-gray-800 font-semibold hover:underline ">Category: {{ blog_post.category }}</div>
                     </a>
                 {% else %}
                     <div class="mt-4 text-gray-800 font-semibold">No Category</div>
@@ -31,10 +31,10 @@
             </div>
             {% if user.is_authenticated %}
             <div class="flex justify-evenly p-1">
-                <a href="{% url 'authors:edit_posts' posts.pk %}" class="bg-gray-500 hover:bg-gray-600 p-1 text-white  rounded plaintext-buttom">Edit post </a>
-                <form action="{% url 'authors:delete_post' posts.pk %}" method="POST" class="inline-form form_delete">
+                <a href="{% url 'authors:edit_posts' blog_post.pk %}" class="bg-gray-500 hover:bg-gray-600 p-1 text-white  rounded plaintext-buttom">Edit post </a>
+                <form action="{% url 'authors:delete_post' blog_post.pk %}" method="POST" class="inline-form form_delete">
                     {% csrf_token %}
-                    <input type="hidden" name="id" value="{{ post.pk }}">
+                    <input type="hidden" name="id" value="{{ blog_post.pk }}">
                     <button type="submit" class="bg-red-500 hover:bg-red-600 p-1 text-white  rounded plaintext-buttom">
                         Delete&#128465;
                     </button>

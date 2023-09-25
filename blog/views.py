@@ -1,15 +1,13 @@
-from email import message
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 from utils.pagination import make_pagination
-from django.contrib import messages
 
 from blog.models import PostBlog, Category
 
 
 class BlogListView(ListView):
     template_name = 'blog/blog.html'
-    context_object_name = 'blog'
+    context_object_name = 'blog_list'
     model = PostBlog
     paginate_by = 5
 
@@ -24,7 +22,7 @@ class BlogListView(ListView):
             qty_pages=4
         )
 
-        context['blog'] = page_obj
+        context['blog_list'] = page_obj
         context['pagination_range'] = pagination_range
 
         return context
@@ -36,7 +34,7 @@ class BlogListView(ListView):
 class PostDetailView(DetailView):
     model = PostBlog
     template_name = 'blog/blog_post.html'
-    context_object_name = 'posts'
+    context_object_name = 'blog_post'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
