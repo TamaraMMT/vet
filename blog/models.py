@@ -31,5 +31,4 @@ class PostBlog(models.Model):
         if not self.slug:
             slug = f'{slugify(self.title)}'
             self.slug = slug
-
         return super().save(*args, **kwargs)
