@@ -1,26 +1,30 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.urls import reverse_lazy
-from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
 from blog.models import PostBlog, Category
 from authors.forms.post_form import AuthorPostForm
-from django.utils.text import slugify
+from django.urls import reverse_lazy
+from utils.pagination import make_pagination
 
 
-class CreatePostView(LoginRequiredMixin, CreateView):
+class BasePostView(LoginRequiredMixin):
+    login_url = 'authors:login'
+    redirect_field_name = 'next'
     model = PostBlog
     form_class = AuthorPostForm
-    template_name = 'authors/pages/create_post.html'
+    context_object_name = 'posts'
+    success_url_name = 'blog:posts'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
+        context['title'] = self.page_title
         return context
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        form.instance.slug = form.cleaned_data['slug']
-        messages.success(self.request, 'Your post was created!')
+        messages.success(self.request, self.success_message)
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -28,42 +32,51 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         return self.render_to_response(self.get_context_data(form=form))
 
     def get_success_url(self):
-        return reverse_lazy('blog:posts', kwargs={'pk': self.object.pk})
+        return reverse_lazy(self.success_url_name, kwargs={'pk': self.object.pk})
 
 
-class EditPostView(LoginRequiredMixin, UpdateView):
-    model = PostBlog
-    form_class = AuthorPostForm
-    template_name = 'authors/pages/dashboard_edit_post.html'
-    context_object_name = 'posts'
+class DashboardListView(BasePostView, ListView):
+    template_name = 'authors/pages/dashboard.html'
+    paginate_by = 6
+    page_title = 'Dashboard'
+
+    def get_queryset(self):
+        return PostBlog.objects.filter(author=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
+        posts = self.get_queryset()
+        page_obj, pagination_range = make_pagination(
+            self.request, posts, self.paginate_by)
+
+        context['posts'] = page_obj
+        context['pagination_range'] = pagination_range
+
         return context
+
+
+class CreatePostView(BasePostView, CreateView):
+    template_name = 'authors/pages/create_post.html'
+    success_message = 'Your post was created!'
+    page_title = 'New post'
+
+    def form_valid(self, form):
+        form.instance.slug = form.cleaned_data['slug']
+        return super().form_valid(form)
+
+
+class EditPostView(BasePostView, UpdateView):
+    template_name = 'authors/pages/dashboard_edit_post.html'
+    success_message = 'Your post was edited!'
+    page_title = 'Edit post'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['instance'] = self.object
         return kwargs
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        form.instance.slug = slugify(form.instance.title)
-        messages.success(self.request, 'Your post was created!')
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, 'There was an error in the form.')
-        return self.render_to_response(self.get_context_data(form=form))
-
-    def get_success_url(self):
-        return reverse_lazy('blog:posts', kwargs={'pk': self.object.pk})
-
 
 class DeletePostView(LoginRequiredMixin, DeleteView):
-    model = PostBlog
-    form_class = AuthorPostForm
     success_url = reverse_lazy('authors:dashboard')
 
     def get_queryset(self):

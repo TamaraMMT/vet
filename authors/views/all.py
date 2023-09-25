@@ -78,17 +78,3 @@ def logout_view(request):
     logout(request)
     messages.info(request, 'You are logged out.')
     return redirect('authors:login')
-
-
-@login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard(request):
-    posts = PostBlog.objects.filter(
-        author=request.user
-    )
-    page_obj, pagination_range = make_pagination(request, posts, 6)
-
-    return render(request, 'authors/pages/dashboard.html', {
-        'title': 'Dashboard',
-        'posts':  page_obj,
-        'pagination_range': pagination_range,
-    })
