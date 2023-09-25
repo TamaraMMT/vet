@@ -9,18 +9,15 @@ class BlogListView(ListView):
     template_name = 'blog/blog.html'
     context_object_name = 'blog_list'
     model = PostBlog
-    paginate_by = 5
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Veterinary Blog'
 
+        posts = self.get_queryset()
         page_obj, pagination_range = make_pagination(
-            self.request,
-            self.get_queryset(),
-            self.paginate_by,
-            qty_pages=4
-        )
+            self.request, posts, self.paginate_by)
 
         context['blog_list'] = page_obj
         context['pagination_range'] = pagination_range
@@ -45,7 +42,7 @@ class PostDetailView(DetailView):
 class CategoryPostsListView(ListView):
     template_name = 'blog/category_posts.html'
     context_object_name = 'posts_list_category'
-    paginate_by = 5
+    paginate_by = 4
 
     def get_queryset(self):
         category_id = self.kwargs['pk']
@@ -56,12 +53,9 @@ class CategoryPostsListView(ListView):
         context = super().get_context_data(**kwargs)
         context['category'] = self.category
 
+        posts = self.get_queryset()
         page_obj, pagination_range = make_pagination(
-            self.request,
-            self.get_queryset(),
-            self.paginate_by,
-            qty_pages=4
-        )
+            self.request, posts, self.paginate_by)
 
         context['posts_list_category'] = page_obj
         context['pagination_range'] = pagination_range
