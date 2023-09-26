@@ -5,12 +5,17 @@
       <p class="text-l text-gray-300 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores beatae veniam veritatis totam possimus repellat excepturi facilis vitae quia? Doloribus</p>
     </div>
     <div class="w-1/4">
-      <h3 class="mb-5 font-semibold text-gray-100">Home</h3>
+      <h3 class="mb-5 font-semibold text-gray-100">
+        <a href="{% url 'veterinary:home' %}" class="hover:text-gray-500">Home</a>
+      </h3>
       <ul class="space-y-2 text-l text-gray-200">
         <li><a href="{% url 'veterinary:services' %}" class="hover:text-gray-500">About Us</a></li>
         <li><a href="{% url 'contact:contact' %}" class="hover:text-gray-500">Contact</a></li>
         <li><a href="#" class="hover:text-gray-500">Privacy Policy</a></li>
         <li><a href="#" class="hover:text-gray-500">Terms of Use</a></li>
+        {% if blog_list %}
+        <li><a href="{% url 'authors:login' %}" class="hover:text-gray-500">Login Authors</a></li>
+        {% endif %}
       </ul>
     </div>
   </footer>
