@@ -17,7 +17,9 @@ class BlogListView(ListView):
 
         posts = self.get_queryset()
         page_obj, pagination_range = make_pagination(
-            self.request, posts, self.paginate_by)
+            self.request,
+            posts,
+            self.paginate_by)
 
         context['blog_list'] = page_obj
         context['pagination_range'] = pagination_range
@@ -25,7 +27,9 @@ class BlogListView(ListView):
         return context
 
     def get_queryset(self):
-        return PostBlog.objects.all().order_by('-id')
+        qs = PostBlog.objects.all().select_related(
+            'author', 'category').order_by('-id')
+        return qs
 
 
 class PostDetailView(DetailView):
