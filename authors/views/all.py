@@ -4,9 +4,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from blog.models import PostBlog
-from utils.pagination import make_pagination
-from django.http import Http404
 from authors.forms import RegistrationForm, LoginForm
 
 

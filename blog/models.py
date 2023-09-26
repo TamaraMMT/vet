@@ -17,8 +17,17 @@ class PostBlog(models.Model):
     slug = models.SlugField(unique=True)
     created_ad = models.DateTimeField(auto_now_add=True)
     update_ad = models.DateTimeField(auto_now=True)
-    cover = models.ImageField(upload_to='blog/covers/%Y/%m/%d', blank=True, null=True)    # noqa:E501
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True, default=None)     # noqa:E501
+    cover = models.ImageField(
+        upload_to='blog/covers/%Y/%m/%d',
+        blank=True,
+        null=True
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        blank=True, null=True,
+        default=None
+    )
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):

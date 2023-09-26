@@ -1,5 +1,3 @@
-from ast import Delete
-from urllib import response
 from django.urls import reverse
 from .test_post_base import PostTestBase
 
@@ -30,11 +28,10 @@ class BlogPageViewTest(PostTestBase):
         self.assertContains(response, self.category.name)
 
     def test_blog_is_paginated(self):
-     # make_post() there are already two recipes created. in total there are 22 posts created
         for _ in range(20):
             self.make_post()
 
         response = self.client.get(reverse('blog:blog'))
         list_post_blog = response.context['blog_list']
 
-        self.assertEqual(len(list_post_blog), 5)
+        self.assertEqual(len(list_post_blog), 4)

@@ -89,7 +89,6 @@ class RegisterIntegrationTest(DjangoTestCase):
         ('password2', 'Please, repeat your password'),
         ('email', 'E-mail is required'),
     ])
-    # Check if the field not is empty
     def test_register_fields_cannot_be_empty(self, field, msg):
         self.form_data[field] = ''
         url = reverse('authors:register')
