@@ -29,6 +29,7 @@ class BlogListView(ListView):
     def get_queryset(self):
         qs = PostBlog.objects.all().select_related(
             'author', 'category').order_by('-id')
+        qs = qs.prefetch_related('author__profile')
         return qs
 
 
