@@ -15,5 +15,10 @@ urlpatterns = [
         views.DeletePostView.as_view(),
         name='delete_post'
     ),
+    path(
+        'profile/<int:pk>/',
+        views.ProfileView.as_view(),
+        name='profile'
+    ),
 
 ]

@@ -1,0 +1,13 @@
+{% extends 'global/base.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+
+{% block content %}
+<div class="p-10 m-20 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
+    <div class=" w-full max-w-xs mx-auto text-center">
+        <h2 class="text-2xl block font-semibold mb-4">Profile {{profile.author.get_full_name}}</h2>
+        <p class="m-3 p-3 text-gray-700">{{profile.bio}}</p>
+    </div>
+</div>
+
+{% endblock content %}
