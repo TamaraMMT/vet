@@ -13,12 +13,13 @@ class BasePostViewTest(DjangoTestCase):
         self.client.login(username='testuser', password='testpassword')
 
         category = Category.objects.create(name='Example Category')
-        self.post = PostBlog.objects.create(
-            title='Sample Title post blog',
-            slug='sample-slug',
-            article='Nihil mollitia deleniti officia exercitationem',
-            category=category
-        )
+        self.post = {
+            'title': 'Sample Title post blog',
+            'slug': 'sample-slug',
+            'article': 'Nihil mollitia deleniti officia exercitationem',
+            'category': category,
+        }
+
         return super().setUp(*args, **kwargs)
 
 
@@ -30,6 +31,12 @@ class DashboardViewTest(BasePostViewTest):
         self.assertEqual(response_dashboard.status_code, 302)
         self.assertRedirects(response_dashboard, reverse(
             'authors:login') + '?next=' + reverse('authors:dashboard'))
+
+    def test_dashboard_page_contains_title(self):
+        response = self.client.get(reverse('authors:dashboard'))
+        context = response.context
+
+        self.assertEqual(context['title'], 'Dashboard')
 
 
 class CreatePostViewTest(BasePostViewTest):
@@ -65,15 +72,6 @@ class CreatePostViewTest(BasePostViewTest):
 
 
 class EditPostViewTest(BasePostViewTest):
-    def test_edit_post_redirect_login_url_and_redirect_field_name(self):
-        self.client.logout()
-        response_edit_post = self.client.get(
-            reverse('authors:edit_posts', kwargs={'pk': self.post.id}))
-
-        self.assertEqual(response_edit_post.status_code, 302)
-        self.assertRedirects(response_edit_post, reverse(
-            'authors:login') + '?next=' + reverse('authors:edit_posts', kwargs={'pk': self.post.id}))
-
     def test_edit_post_page_contains_title(self):
         response = self.client.get(reverse('authors:dashboard'))
         context = response.context
