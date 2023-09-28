@@ -29,23 +29,32 @@
                         </div>
                         <div class="p-5 min-w-[900px]">
                             <a href="{% url 'blog:posts' pk=posts.pk %}" class="block   text-lg font-medium text-black hover:underline">{{ posts.title }}</a>
-                            {% if posts.author %}
-                                <h2 class=" text-indigo-500 font-semibold mt-2">
-                                    {% if posts.author.first_name %}
-                                        {{ posts.author.first_name }}{{ posts.author.last_name }}
-                                    {% else %}
-                                        {{ posts.author.username }}
-                                    {% endif %}
-                                </h2>
-                            {% else %}
-                                <h2 class=" text-indigo-500 font-semibold mt-2">Author unknown</h2>
-                            {% endif %}
                             <a href="{% url 'blog:posts' pk=posts.pk %}">
                                 <p class="mt-2 text-gray-600 leading-relaxed">{{ posts.article|truncatechars:180 }}</p>
                             </a>
-                            <a href="{% url 'blog:category_posts' pk=posts.category.pk %}">
-                                <div class="mt-3 text-gray-800 font-semibold hover:underline">Category: {{ posts.category }}</div>
-                            </a>
+                            <div class="lg:flex justify-between mt-2">
+                                <div>
+                                    {% if posts.author %}
+                                        <h2 class=" text-indigo-500 font-semibold mt-2">
+                                            Author:
+                                            <a href="{% url 'authors:profile' pk=posts.author.pk %}" class="hover:text-gray-800">
+                                            {% if posts.author.first_name %}
+                                                {{ posts.author.first_name }} {{ posts.author.last_name }}
+                                            {% else %}
+                                                {{ posts.author.username }}
+                                            {% endif %}
+                                            </a>
+                                        </h2>
+                                    {% else %}
+                                        <h2 class=" text-indigo-500 font-semibold mt-2">Author unknown</h2>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <a href="{% url 'blog:category_posts' pk=posts.category.pk %}">
+                                        <div class="mt-3 text-gray-800 font-semibold hover:underline">Category: {{ posts.category }}</div>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
