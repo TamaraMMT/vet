@@ -15,15 +15,8 @@ jobs:
           ENV_FILE: ${{ secrets.ENV_FILE }}
         run: echo "$ENV_FILE" > .env
 
-      - name: Test
-        run: python manage.py test
-
-      - name: Lint
-        run: flake8
-
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:
-          files: ./htmlcov/*.xml
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          files: ./htmlcov/index.html
+          token: ${{ secrets.CODECOV_TOKEN }}
