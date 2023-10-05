@@ -14,8 +14,7 @@ This project is a website designed for a veterinary clinic. It encompasses sever
 
 **Services Description:** The website provides a comprehensive section that details the range of services offered by the veterinary clinic, making it easier for visitors to understand what's available.
 
-**Blog:** The website includes a blog where veterinarians can log in, create, edit, and delete blog posts. This feature allows the clinic to share valuable information and updates with its audience.
-By combining these elements, the website aims to provide an informative and engaging online presence for the veterinary clinic, enhancing communication with clients and providing valuable resources through the blog.
+##**Blog:** The website allows veterinarians to register and log in, granting them access to a blog. Within the blog, veterinarians can **create, edit, and delete** their posts, each of which is categorized. Veterinarians also have profiles that include bios.
 
 Additional information for GitHub project description:
 
