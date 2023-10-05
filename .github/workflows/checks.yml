@@ -15,11 +15,11 @@ jobs:
           ENV_FILE: ${{ secrets.ENV_FILE }}
         run: echo "$ENV_FILE" > .env
 
-      - name: Test
-        run: python manage.py test
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-      - name: Lint
-        run: flake8
+      - name: Test coverage
+        run: coverage run -m pytest
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
