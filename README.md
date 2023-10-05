@@ -1,3 +1,5 @@
+![Codecov](https://img.shields.io/codecov/c/github/tamarammt/vet)
+
 ## Project Title: 
 
 ### **Veterinary Clinic Website**
