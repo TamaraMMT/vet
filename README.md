@@ -1,8 +1,8 @@
-##Project Title: 
+## Project Title: 
 
-###**Veterinary Clinic Website**
+### **Veterinary Clinic Website**
 
-##Project Description:
+## Project Description:
 
 This project is a website designed for a veterinary clinic. It encompasses several key features:
 
@@ -98,7 +98,7 @@ EMAIL_TO =[input your email for send the emails]
 ```
 
 
-##Welcome Contributions!
+## Welcome Contributions!
 
 We value and appreciate **contributions** from the community. If you have suggestions to improve this project, please feel free to open a pull request.
 
