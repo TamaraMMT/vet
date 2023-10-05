@@ -156,7 +156,7 @@ class RegisterIntegrationTest(DjangoTestCase):
             self.assertIn(msg, email_errors)
 
     def test_register_view_if_user_is_authenticated_redirect(self):
-        user = User.objects.create_user(
+        User.objects.create_user(
             username='test_user', password='password')
 
         self.client.login(username='test_user', password='password')
@@ -176,7 +176,10 @@ class RegisterIntegrationTest(DjangoTestCase):
     def test_clean_email_already_exists(self):
         existing_email = 'test@example.com'
         User.objects.create_user(
-            username='existing_user', email=existing_email, password='password')
+            username='existing_user',
+            email=existing_email,
+            password='password'
+        )
 
         form_data = {
             'first_name': 'John',
