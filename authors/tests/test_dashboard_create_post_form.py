@@ -1,6 +1,6 @@
 
 from django.test import TestCase as DjangoTestCase
-from blog.models import Category, PostBlog
+from blog.models import Category
 from authors.forms.post_form import AuthorPostForm
 from django.urls import reverse
 from django.contrib.auth.models import User
