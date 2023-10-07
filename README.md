@@ -113,9 +113,9 @@ This project is still under construction.
 
 
 
-<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/contact.png?raw=true" height="120" width="120" >
-<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/dashboard.png?raw=true" height="120" width="120" >
-<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/logged%20out.png?raw=true" height="120" width="120" >
-<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/services.png?raw=true" height="120" width="120" >
+<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/contact.png?raw=true"  >
+<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/dashboard.png?raw=true" >
+<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/logged%20out.png?raw=true"  >
+<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/services.png?raw=true" >
 
 
