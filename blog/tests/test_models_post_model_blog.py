@@ -40,7 +40,7 @@ class PostBlogModelTest(TestCase):
     def test_get_absolute_url(self):
         self.post.save()
 
-        expected_url = f'/blog/posts/{self.post.id}/'
+        expected_url = f'/blog/post/{self.post.id}/'
         self.assertEqual(self.post.get_absolute_url(), expected_url)
 
     def test_slug_generation(self):
