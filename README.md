@@ -111,5 +111,4 @@ Thank you for helping to make this project better!
 
 This project is still under construction.
 
-<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/contact.png?raw=true" style=" width:60px; height:60px " >
 
