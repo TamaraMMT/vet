@@ -14,7 +14,7 @@ This project is a website designed for a veterinary clinic. It encompasses sever
 
 **Services Description:** The website provides a comprehensive section that details the range of services offered by the veterinary clinic, making it easier for visitors to understand what's available.
 
-##**Blog:** The website allows veterinarians to register and log in, granting them access to a blog. Within the blog, veterinarians can **create, edit, and delete** their posts, each of which is categorized. Veterinarians also have profiles that include bios.
+##**Blog:** The website offers veterinarians the ability to register and log in, providing them with access to a dedicated blog platform. Within this blog, veterinarians can create, edit, and delete their posts, each of which can be categorized for better organization. Additionally, veterinarians are provided with individual profiles that feature biographical information, and a user-friendly dashboard where they can efficiently manage their blog posts.
 
 Additional information for GitHub project description:
 
@@ -110,3 +110,12 @@ Thank you for helping to make this project better!
 ## Project Status
 
 This project is still under construction.
+
+
+
+<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/contact.png?raw=true"  >
+<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/dashboard.png?raw=true" >
+<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/logged%20out.png?raw=true"  >
+<img src="https://github.com/TamaraMMT/vet/blob/main/images%20README/services.png?raw=true" >
+
+
