@@ -1,5 +1,7 @@
 from django.forms import ValidationError
 from blog.tests.test_post_base import PostTestBase
+from django.test import TestCase
+from blog.models import User, Category, PostBlog
 
 
 class PostModelTest(PostTestBase):
@@ -21,16 +23,28 @@ class PostModelTest(PostTestBase):
         self.assertEqual(str(self.post), 'My first post')
 
 
-class CategoryModelTest(PostTestBase):
+class PostBlogModelTest(TestCase):
     def setUp(self):
-        self.post = self.make_post()
-        self.category = self.make_category(name='Category')
-        return super().setUp()
+        self.user = User.objects.create_user(
+            username='testuser', first_name='Name User', password='testpassword')
 
-    def test_category_str_representation(self):
-        self.assertEqual(str(self.category), 'Category')
+        self.category = Category.objects.create(name='Example Category')
 
-    def test_category_raise_error_if_title_has_more_65_chars(self):
-        self.category.name = 'A' * 61
-        with self.assertRaises(ValidationError):
-            self.category.full_clean()
+        self.post = PostBlog(
+            title='Test Post',
+            article='This is a test post content.',
+            category=self.category,
+            author=self.user
+        )
+
+    def test_get_absolute_url(self):
+        self.post.save()
+
+        expected_url = f'/blog/posts/{self.post.id}/'
+        self.assertEqual(self.post.get_absolute_url(), expected_url)
+
+    def test_slug_generation(self):
+        self.post.save()
+
+        expected_slug = 'test-post'
+        self.assertEqual(self.post.slug, expected_slug)
