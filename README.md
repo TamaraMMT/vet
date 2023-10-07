@@ -8,13 +8,17 @@
 
 This project is a website designed for a veterinary clinic. It encompasses several key features:
 
-**About Us Section:** This section offers insights into the clinic's background, mission, and team, helping users get to know the clinic better.
+**About Us Section:**
+    This section offers insights into the clinic's background, mission, and team, helping users get to know the clinic better.
 
-**Contact Section:** Users can easily reach out to the clinic by sending emails or inquiries through the contact section.
+**Contact Section:**
+    Users can easily reach out to the clinic by sending emails or inquiries through the contact section.
 
-**Services Description:** The website provides a comprehensive section that details the range of services offered by the veterinary clinic, making it easier for visitors to understand what's available.
+**Services Description:** 
+    The website provides a comprehensive section that details the range of services offered by the veterinary clinic, making it easier for visitors to understand what's available.
 
-## **Blog:** The website offers veterinarians the ability to register and log in, providing them with access to a dedicated blog platform. Within this blog, veterinarians can create, edit, and delete their posts, each of which can be categorized for better organization. Additionally, veterinarians are provided with individual profiles that feature biographical information, and a user-friendly dashboard where they can efficiently manage their blog posts.
+## **Blog:** 
+    The website offers veterinarians the ability to register and log in, providing them with access to a dedicated blog platform. Within this blog, veterinarians can create, edit, and delete their posts, each of which can be categorized for better organization. Additionally, veterinarians are provided with individual profiles that feature biographical information, and a user-friendly dashboard where they can efficiently manage their blog posts.
 
 Additional information for GitHub project description:
 
