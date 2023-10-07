@@ -8,10 +8,6 @@ class RegistrationForm(forms.ModelForm):
     username = forms.CharField(
         widget=forms.TextInput(attrs={'placeholder': 'Your username'}),
         label='Username',
-        help_text=(
-            'Username must have letters, numbers or one of those @.+-_. '
-            'The length should be between 4 and 30 characters.'
-        ),
         error_messages={
             'required': 'This field must not be empty',
             'min_length': 'Minimum 4 characters',
@@ -33,10 +29,10 @@ class RegistrationForm(forms.ModelForm):
     )
 
     email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'placeholder': 'Your email'}),
+        widget=forms.EmailInput(
+            attrs={'placeholder': 'youremail@example.com'}),
         error_messages={'required': 'E-mail is required'},
         label='E-mail',
-        help_text='yourname@example.com',
     )
 
     password = forms.CharField(
@@ -44,11 +40,6 @@ class RegistrationForm(forms.ModelForm):
         error_messages={
             'required': 'Password must not be empty'
         },
-        help_text=(
-            'Password must have at least one uppercase letter, '
-            'one lowercase letter and one number. The length should be '
-            'at least 8 characters.'
-        ),
         validators=[strong_password],
         label='Password'
     )
