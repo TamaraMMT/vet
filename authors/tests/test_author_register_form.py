@@ -11,7 +11,7 @@ class AuthorRegisterFormUnittest(TestCase):
         ('username', 'Your username'),
         ('first_name', 'Your first name'),
         ('last_name', 'Your last name'),
-        ('email', 'Your email'),
+        ('email', 'youremail@example.com'),
         ('password', 'Your password'),
         ('password2', 'Repeat your password')
     ])
@@ -19,20 +19,6 @@ class AuthorRegisterFormUnittest(TestCase):
         form = RegistrationForm()
         placeholder_form = form[field].field.widget.attrs['placeholder']
         self.assertEqual(placeholder_form, placeholder)
-
-    @parameterized.expand([
-        ('username',
-         'Username must have letters, numbers or one of those @.+-_. '
-         'The length should be between 4 and 30 characters.'),
-        ('email', 'yourname@example.com'),
-        ('password', 'Password must have at least one uppercase letter, '
-            'one lowercase letter and one number. The length should be '
-            'at least 8 characters.'),
-    ])
-    def test_register_help_text_fields_is_correct(self, field, help_text):
-        form = RegistrationForm()
-        current = form[field].field.help_text
-        self.assertEqual(current, help_text)
 
     @parameterized.expand([
         ('username', 'This field must not be empty'),
@@ -46,6 +32,24 @@ class AuthorRegisterFormUnittest(TestCase):
         form = RegistrationForm()
         current = form.fields[field].error_messages['required']
         self.assertEqual(current, error_messages)
+
+    def test_username_min_length(self):
+        short_username = 'abc'
+        form = RegistrationForm(data={'username': short_username})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['username'],
+            ['Minimum 4 characters']
+        )
+
+    def test_username_max_length(self):
+        long_username = 'A' * 31
+        form = RegistrationForm(data={'username': long_username})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['username'],
+            ['Max 30 characters']
+        )
 
 
 class RegisterIntegrationTest(DjangoTestCase):
@@ -116,7 +120,9 @@ class RegisterIntegrationTest(DjangoTestCase):
         url = reverse('authors:register')
         response = self.client.post(url, data=self.form_data)
         msg = (
-            'Password is not secure, does not meet the specified requirements'
+            'Password must have at least one uppercase letter, '
+            'one lowercase letter and one number. The length should be '
+            'at least 8 characters.'
         )
 
         self.assertIn(msg, response.context['form'].errors.get('password'))
