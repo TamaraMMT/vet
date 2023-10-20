@@ -14,7 +14,9 @@ class AuthorPostForm(forms.ModelForm):
             'max_length': 'Max 100 characters',
         },
         widget=forms.TextInput(attrs={
-            'class': 'my-3 block w-full rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:ring-inset sm:text-sm sm:leading-6',
+            'class': 'my-3 block w-full rounded-md border-0 p-1 text-gray-900 '
+                     'shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400'
+                     'focus:ring-inset sm:text-sm sm:leading-6',
             'placeholder': 'Input your title',
         }),
     )
@@ -29,7 +31,9 @@ class AuthorPostForm(forms.ModelForm):
             'max_length': 'Max 1500 characters',
         },
         widget=forms.Textarea(attrs={
-            'class': 'my-3 block w-full rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:ring-inset sm:text-sm sm:leading-6',
+            'class': 'my-3 block w-full rounded-md border-0 p-1 text-gray-900 '
+                     'shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400'
+                     'focus:ring-inset sm:text-sm sm:leading-6',
             'placeholder': 'Input your article',
             'rows': 10,
         }),
@@ -39,9 +43,12 @@ class AuthorPostForm(forms.ModelForm):
         queryset=Category.objects.all(),
         empty_label='Select a category',
         widget=forms.Select(attrs={
-            'class': 'my-3 block rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:ring-inset sm:text-sm sm:leading-6',
+            'class': 'my-3 block rounded-md border-0 p-1 text-gray-900 '
+                     'shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400'
+                     'focus:ring-inset sm:text-sm sm:leading-6',
         }),
     )
+
     slug = forms.SlugField(
         label='Slug',
         min_length=10,
@@ -52,7 +59,9 @@ class AuthorPostForm(forms.ModelForm):
             'max_length': 'Max 100 characters',
         },
         widget=forms.TextInput(attrs={
-            'class': 'my-3 block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:ring-inset sm:text-sm sm:leading-6',
+            'class': 'my-3 block w-full rounded-md border-0 p-1 text-gray-900 '
+                     'shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400'
+                     'focus:ring-inset sm:text-sm sm:leading-6',
             'placeholder': 'Input-your-title-for-the-slug',
         }),
     )

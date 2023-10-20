@@ -9,7 +9,10 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout_view'),
     path('dashboard/', views.DashboardListView.as_view(), name='dashboard'),
     path('create-post/', views.CreatePostView.as_view(), name='create_post'),
-    path('post/<int:pk>/edit/', views.EditPostView.as_view(), name='edit_posts'),
+    path(
+        'post/<int:pk>/edit/',
+        views.EditPostView.as_view(),
+        name='edit_posts'),
     path(
         'authors/delete/<pk>/',
         views.DeletePostView.as_view(),
