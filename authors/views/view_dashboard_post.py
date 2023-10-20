@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.contrib.auth.views import PasswordResetView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from blog.models import PostBlog, Category
@@ -45,7 +44,9 @@ class DashboardListView(BasePostView, ListView):
     page_title = 'Dashboard'
 
     def get_queryset(self):
-        return PostBlog.objects.filter(author=self.request.user).order_by('-id')
+        return PostBlog.objects.filter(
+            author=self.request.user
+        ).order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -63,10 +64,6 @@ class CreatePostView(BasePostView, CreateView):
     template_name = 'authors/pages/create_post.html'
     success_message = 'Your post was created!'
     page_title = 'New post'
-
-    def form_valid(self, form):
-        form.instance.slug = form.cleaned_data['slug']
-        return super().form_valid(form)
 
 
 class EditPostView(BasePostView, UpdateView):

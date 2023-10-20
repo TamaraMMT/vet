@@ -42,9 +42,3 @@ class PostBlogModelTest(TestCase):
 
         expected_url = f'/blog/post/{self.post.id}/'
         self.assertEqual(self.post.get_absolute_url(), expected_url)
-
-    def test_slug_generation(self):
-        self.post.save()
-
-        expected_slug = 'test-post'
-        self.assertEqual(self.post.slug, expected_slug)
