@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
-from utils.pagination import make_pagination
 
 from blog.models import PostBlog, Category
 
@@ -14,15 +13,6 @@ class BlogListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Veterinary Blog'
-
-        posts = self.get_queryset()
-        page_obj, pagination_range = make_pagination(
-            self.request,
-            posts,
-            self.paginate_by)
-
-        context['blog_list'] = page_obj
-        context['pagination_range'] = pagination_range
 
         return context
 
@@ -57,12 +47,5 @@ class CategoryPostsListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category'] = self.category
-
-        posts = self.get_queryset()
-        page_obj, pagination_range = make_pagination(
-            self.request, posts, self.paginate_by)
-
-        context['posts_list_category'] = page_obj
-        context['pagination_range'] = pagination_range
 
         return context

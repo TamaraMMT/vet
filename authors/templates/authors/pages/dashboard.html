@@ -41,7 +41,7 @@
             </ul>
         {% endfor %}
 
-        {% if posts.has_other_pages %}
+        {% if is_paginated%}
         {% include 'global/partials/pagination.html' %}
         {% endif %}
 

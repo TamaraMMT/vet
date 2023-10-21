@@ -65,7 +65,7 @@
                     </div>
                 {% endfor %}
 
-                {% if blog_list.has_other_pages %}
+                {% if is_paginated%}
                 {% include 'global/partials/pagination.html' %}
                 {% endif %}
 

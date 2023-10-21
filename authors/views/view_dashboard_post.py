@@ -5,7 +5,6 @@ from django.views.generic import ListView
 from blog.models import PostBlog, Category
 from authors.forms.post_form import AuthorPostForm
 from django.urls import reverse_lazy
-from utils.pagination import make_pagination
 
 
 class BasePostView(LoginRequiredMixin):
@@ -51,11 +50,6 @@ class DashboardListView(BasePostView, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         posts = self.get_queryset()
-        page_obj, pagination_range = make_pagination(
-            self.request, posts, self.paginate_by)
-
-        context['posts'] = page_obj
-        context['pagination_range'] = pagination_range
 
         return context
 

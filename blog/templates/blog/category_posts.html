@@ -59,9 +59,11 @@
                     </div>
                 </div>
                 {% endfor %}
-            {% if posts_list_category.has_other_pages %}
-            {% include 'global/partials/pagination.html' %}
-            {% endif %}
+                
+                {% if is_paginated%}
+                {% include 'global/partials/pagination.html' %}
+                {% endif %}
+
             </div>
         </div>
     </div>
