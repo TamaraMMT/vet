@@ -157,3 +157,13 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',  # noqal
+    'PAGE_SIZE': 5,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+
+}
