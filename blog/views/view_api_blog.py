@@ -9,9 +9,9 @@ from blog.serializers import (
 )
 
 
-class BlogAPIViewSet(viewsets.ModelViewSet):
+class BlogAPIViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = PostBlog.objects.all()
-    serializer_class = PostBlogSerializer  # Set a default serializer class
+    serializer_class = PostBlogSerializer
 
     def get_serializer_class(self):
         if self.action == "retrieve":
