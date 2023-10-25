@@ -9,7 +9,7 @@ from blog.models import Category, PostBlog
 
 
 class CategorySerializer(ModelSerializer):
-    """Serializer for category."""
+    """Serializer for category"""
     class Meta:
         model = Category
         fields = ['id', 'name']
@@ -23,13 +23,13 @@ class UserSerializer(ModelSerializer):
 
 
 class PostBlogSerializer(ModelSerializer):
-    category = CategorySerializer(many=False, required=True)
+    """Serializer for posts"""
+    category = CategorySerializer()
     author = UserSerializer()
 
     class Meta:
         model = PostBlog
         fields = ['id', 'title', 'author', 'category']
-        read_only_fields = ['id']
 
 
 class PostDetailSerializer(PostBlogSerializer):
