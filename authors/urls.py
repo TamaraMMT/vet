@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from authors import views
 
 from rest_framework_simplejwt.views import (
@@ -6,8 +6,13 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
+from rest_framework.routers import DefaultRouter
 
 app_name = 'authors'
+
+router = DefaultRouter()
+router.register('posts', views.AuthorPostsViewSet)
+
 
 urlpatterns = [
     path('register/', views.register, name='register'),
@@ -42,6 +47,12 @@ urlpatterns = [
     path(
         'api/token/verify/',
         TokenVerifyView.as_view(),
-        name='token_verify'),
-
+        name='token_verify'
+    ),
+    path(
+        'api/register',
+        views.RegisterAuthorView.as_view(),
+        name='register_author'
+    ),
+    path('', include(router.urls)),
 ]
