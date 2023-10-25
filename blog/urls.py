@@ -12,14 +12,13 @@ urlpatterns = [
         name='category_posts'
     ),
     path(
-        'api/posts/v1/',
+        'api/posts/',
         views.BlogAPIViewSet.as_view({'get': 'list'}),
         name='list_post'
     ),
     path(
-        'api/posts/v1/<int:pk>/',
+        'api/posts/<int:pk>/',
         views.BlogAPIViewSet.as_view({'get': 'retrieve'}),
         name='detail_post'
     ),
-
 ]
