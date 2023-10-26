@@ -16,16 +16,9 @@ class CategorySerializer(ModelSerializer):
         read_only_fields = ['id']
 
 
-class UserSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['username', 'first_name']
-
-
 class PostBlogSerializer(ModelSerializer):
     """Serializer for posts"""
     category = CategorySerializer()
-    author = UserSerializer()
 
     class Meta:
         model = PostBlog
