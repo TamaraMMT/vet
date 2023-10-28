@@ -4,7 +4,11 @@ Serializers for the user API
 
 from django.contrib.auth import (
     authenticate,
+    get_user_model
 )
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from blog.models import (
     User,
     PostBlog,
@@ -24,7 +28,7 @@ class RegistrationAuthorSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ['first_name', 'last_name', 'username',
                   'email', 'password', 'password2']
 
@@ -44,7 +48,7 @@ class RegistrationAuthorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """ Create a new user instance with the validated data"""
-        user = User.objects.create(
+        user = get_user_model().objects.create(
             username=validated_data['username'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],
@@ -78,7 +82,7 @@ class AuthTokenSerializer(serializers.Serializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ['username', 'first_name']
 
 
@@ -103,3 +107,13 @@ class PostBlogAuthorSerializer(serializers.ModelSerializer):
         )
         post.save()
         return post
+
+    @action(detail=False, methods=['get'])
+    def me(self, request):
+        user = request.user
+
+        if user.is_authenticated:
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
