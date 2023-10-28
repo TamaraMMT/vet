@@ -54,5 +54,6 @@ urlpatterns = [
         views.RegisterAuthorView.as_view(),
         name='register_author'
     ),
+    path('api/me/', views.WhoAmIView.as_view(), name='me'),
     path('', include(router.urls)),
 ]
