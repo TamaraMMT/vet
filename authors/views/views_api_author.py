@@ -3,18 +3,19 @@
 
 from rest_framework import viewsets, generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from blog.models import PostBlog
 
 from authors.serializers import (
-    RegistrationSerializer,
+    RegistrationAuthorSerializer,
     PostBlogAuthorSerializer
 )
 
 
 class RegisterAuthorView(generics.CreateAPIView):
     """Create a new user in the system"""
-    serializer_class = RegistrationSerializer
+    serializer_class = RegistrationAuthorSerializer
 
 
 class AuthorPostsViewSet(viewsets.ModelViewSet):
