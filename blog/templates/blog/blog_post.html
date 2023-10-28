@@ -29,7 +29,7 @@
                     <div class="mt-4 text-gray-800 font-semibold">No Category</div>
                 {% endif %}
             </div>
-            {% if user.is_authenticated %}
+            {% if request.user == blog_post.author %}
             <div class="flex justify-evenly p-1">
                 <a href="{% url 'authors:edit_posts' blog_post.pk %}" class="bg-gray-500 hover:bg-gray-600 p-1 text-white  rounded plaintext-buttom">Edit post </a>
                 <form action="{% url 'authors:delete_post' blog_post.pk %}" method="POST" class="inline-form form_delete">
