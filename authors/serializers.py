@@ -7,16 +7,16 @@ from django.contrib.auth import (
 )
 from blog.models import (
     User,
+    PostBlog,
 )
 
-from blog.models import PostBlog
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 from utils.forms_utils import strong_password
 
 
-class RegistrationSerializer(serializers.ModelSerializer):
-    """ The fields from your registration form """
+class RegistrationAuthorSerializer(serializers.ModelSerializer):
+    """ The fields from your registration form Author"""
     password2 = serializers.CharField(write_only=True)
     password = serializers.CharField(
         write_only=True,
@@ -68,7 +68,6 @@ class AuthTokenSerializer(serializers.Serializer):
         username = attrs.get('username')
         password = attrs.get('password')
         user = authenticate(
-            request=self.context.get('request'),
             username=username,
             password=password,
         )
@@ -76,13 +75,31 @@ class AuthTokenSerializer(serializers.Serializer):
             msg = _('Unable to authenticate with provided credentials.')
             raise serializers.ValidationError(msg, code='authorization')
 
-        attrs['user'] = user
-        return attrs
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name']
 
 
 class PostBlogAuthorSerializer(serializers.ModelSerializer):
     """Serializer for Authors posts """
+    author = UserSerializer(read_only=True)
+
     class Meta:
         model = PostBlog
         fields = ['id', 'title', 'slug', 'article', 'author', 'category']
         read_only_fields = ['id', 'author']
+
+    def create(self, validated_data):
+        """ Create a new user instance with the validated data"""
+        user = self.context['request'].user
+        post = PostBlog.objects.create(
+            title=validated_data['title'],
+            article=validated_data['article'],
+            slug=validated_data['slug'],
+            category=validated_data['category'],
+            author=user
+        )
+        post.save()
+        return post
