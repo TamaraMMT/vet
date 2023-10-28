@@ -2,10 +2,10 @@
 Serializers for Blog APIs
 """
 
-from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
 
 from blog.models import Category, PostBlog
+from authors.serializers import UserSerializer
 
 
 class CategorySerializer(ModelSerializer):
@@ -19,6 +19,7 @@ class CategorySerializer(ModelSerializer):
 class PostBlogSerializer(ModelSerializer):
     """Serializer for posts"""
     category = CategorySerializer()
+    author = UserSerializer()
 
     class Meta:
         model = PostBlog
